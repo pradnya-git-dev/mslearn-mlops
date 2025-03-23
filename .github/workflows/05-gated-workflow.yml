@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  train:
+  develop:
     environment: dev
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +26,7 @@ jobs:
 
   stage:
     needs: train
-    environemnt: stage
+    environment: stage
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
