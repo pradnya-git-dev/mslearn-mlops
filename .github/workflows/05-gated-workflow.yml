@@ -25,7 +25,7 @@ jobs:
       working-directory: src
 
   stage:
-    needs: train
+    needs: develop
     environment: stage
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +35,7 @@ jobs:
       run: echo "Placeholder step for the stage environment"
   
   prod:
-    needs: [train, stage]
+    needs: [develop, stage]
     environment: prod
     runs-on: ubuntu-latest
     steps:
