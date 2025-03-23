@@ -1,6 +1,10 @@
-name: Trigger a job on pull request
+name: Trigger a job on push to main and release branches
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - 'main'
+      - 'releases/**'
 
 jobs:
   job1:
