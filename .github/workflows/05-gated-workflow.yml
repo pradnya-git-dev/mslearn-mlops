@@ -28,6 +28,11 @@ jobs:
     needs: train
     environemnt: stage
     runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Placeholder step
+      run: echo "Placeholder step for the stage environment"
   
   prod:
     needs: [train, stage]
