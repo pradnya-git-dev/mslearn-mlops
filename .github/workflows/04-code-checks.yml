@@ -13,16 +13,24 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.8'
-    - name: Install Flake8, Pytest, and other requirements
+    - name: Install Flake8
       run: |
         python -m pip install flake8
-        python -m pip install -r requirements.txt
     - name: Run linting tests
       run: | 
         flake8 src/model/
-    - name: Run unit tests
-      run: |
-        pytest tests
+
+  job2:
+    needs: job1
+    name: Unit testing
+    steps:
+      - name: Install Pytest and other requirements
+        run: |
+          python -m pip install -r requirements.txt
+      - name: Run unit tests
+        run: |
+          pytest tests
+
 
 
 
