@@ -1,15 +1,18 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: model
 command: >-
-  python 
-  --
-  --
+  python train.py
+  --training_data ${{inputs.training_data}}
+  --reg_rate ${{inputs.reg_rate}}
 inputs:
   training_data: 
     type: uri_folder 
-    path: 
+    path: azureml:diabetes-dev-folder:0
   reg_rate: 0.01
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
-compute: 
-experiment_name: 
-description: 
+compute: ps-1-cpu
+experiment_name: mslearn-mlops-challenge-1
+description: Challenge link - https://microsoftlearning.github.io/mslearn-mlops/documentation/01-aml-job
+
+# Command: `run_id=$(az ml job create -f <job_file.yml> --workspace-name=<workspace_name> --resource-group=<resource_group>)`
+# Help: https://learn.microsoft.com/en-us/azure/machine-learning/how-to-train-model?view=azureml-api-2&tabs=azurecli

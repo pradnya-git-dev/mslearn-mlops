@@ -109,6 +109,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+creds.env
 
 # Spyder project settings
 .spyderproject
