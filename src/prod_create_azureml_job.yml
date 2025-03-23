@@ -8,11 +8,11 @@ command: >-
 inputs:
   training_data: 
     type: uri_folder 
-    path: azureml:diabetes-dev-folder:0
-  reg_rate: 0.01
+    path: azureml:diabetes-prod-folder:0
+  reg_rate: 0.010
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
 compute: azureml:ps-1-cpu-cluster
-experiment_name: mslearn-mlops-challenge-1
+experiment_name: mslearn-mlops-challenge-5
 description: Challenge link - https://microsoftlearning.github.io/mslearn-mlops/documentation/01-aml-job
 
 # Command: `run_id=$(az ml job create -f <job_file.yml> --workspace-name=<workspace_name> --resource-group=<resource_group>)`

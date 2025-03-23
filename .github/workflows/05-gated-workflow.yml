@@ -1,0 +1,58 @@
+name: Gated workflow for Azure Machine Learning operations
+
+on:
+  workflow_dispatch:
+
+jobs:
+  train:
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Select the resource group and the workspace
+      run: |
+        az configure --defaults group=${{vars.AZ_RESOURCE_GROUP}}
+        az configure --defaults workspace=${{vars.AZ_WORKSPACE}}
+    - name: Run the Azure Machine Learning job
+      run: az ml job create --file ../src/dev_create_azureml_job.yml --stream
+      working-directory: src
+
+  stage:
+    needs: train
+    environemnt: stage
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Placeholder step
+      run: echo "Placeholder step for the stage environment"
+  
+  prod:
+    needs: [train, stage]
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Select the resource group and the workspace
+      run: |
+        az configure --defaults group=${{vars.AZ_RESOURCE_GROUP}}
+        az configure --defaults workspace=${{vars.AZ_WORKSPACE}}
+    - name: Run the Azure Machine Learning job
+      run: az ml job create --file ../src/prod_create_azureml_job.yml
+      working-directory: src
+
+
