@@ -1,9 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: ch06-sklearn-deployment
 endpoint_name: ${{vars.AZ_DEMO_ENDPOINT_NAME}}
-model:
-  name: mslearn-mlops-sklearn-diabetes
-  version: latest
-  type: mlflow_model
+model: azureml:mslearn-mlops-sklearn-diabetes:latest
 instance_type: Standard_DS11_v2
 instance_count: 1
