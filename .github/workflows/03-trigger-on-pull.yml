@@ -1,10 +1,10 @@
 name: Trigger a job on push to main and release branches
 
 on:
-  push:
-    branches:
-      - 'main'
-      - 'releases/**'
+#   push:
+#     branches:
+#       - 'main'
+#       - 'releases/**'
 
 jobs:
   job1:
