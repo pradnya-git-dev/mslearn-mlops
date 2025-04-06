@@ -1,0 +1,3 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
+name: ${{vars.AZ_DEMO_ENDPOINT_NAME}}
+auth_mode: key

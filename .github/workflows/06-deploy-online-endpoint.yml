@@ -1,0 +1,28 @@
+name: Manually trigger an Azure Machine Learning online endpoint deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Select the resource group and the workspace
+      run: |
+        az configure --defaults group=${{vars.AZ_RESOURCE_GROUP}}
+        az configure --defaults workspace=${{vars.AZ_WORKSPACE}}
+    - name: Run the Azure Machine Learning online endpoint deployment command
+      run: az ml online-endpoint create --name ${{vars.AZ_DEMO_ENDPOINT_NAME}} -f create_endpoint.yaml
+      working-directory: src
+    - name: Create the deployment
+      run: az ml online-deployment create --name mslearn-mlops-ch06-deployment --endpoint ${{vars.AZ_DEMO_ENDPOINT_NAME}} -f sklearn_deployment.yaml --all-traffic
+      working-directory: src
